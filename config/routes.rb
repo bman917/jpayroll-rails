@@ -1,6 +1,6 @@
 RailsApp::Application.routes.draw do
   get "tax_sv/show"
-  get "tax_sv/TaxSv"
+
   get "say/hello"
 
   # The priority is based upon order of creation:
