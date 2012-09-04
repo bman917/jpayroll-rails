@@ -21,7 +21,7 @@ class TaxSvHelperTest < ActionView::TestCase
   end
   
   
-  test "Test SSS Contribution calculation" do
+  test "Test SSS Contribution Calculation 2012" do
   
     sss_contriubtion_test(  500.00,    0.00,   0.00)
 	sss_contriubtion_test( 1000.00,   70.70,  33.30)

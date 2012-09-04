@@ -32,11 +32,12 @@ module TaxSvHelper
 #=================================================
   
   def calc_sss_contribution_2012(monthlyIncome)
-    
+
     SSS_2012.call monthlyIncome
+
   end
 
-
+  
   SSS_2012 = lambda do |monthlyIncome|
     
     inc = monthlyIncome
