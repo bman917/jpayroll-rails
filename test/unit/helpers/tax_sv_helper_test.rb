@@ -39,4 +39,19 @@ class TaxSvHelperTest < ActionView::TestCase
     assert_equal expected, SSS_2012.call(monthlyIncome), msg
   end
   
+  test "Test Phil Health Contribution Claculation 2012" do
+    philhealth_contribution_test  50.00,  2000.00
+    philhealth_contribution_test  50.00,  4000.00
+    philhealth_contribution_test 125.00, 10000.00
+    philhealth_contribution_test 187.50, 15000.00
+    philhealth_contribution_test 312.50, 25000.00
+    philhealth_contribution_test 375.00, 30000.00
+    philhealth_contribution_test 375.00, 50000.00   
+  end
+  
+  def philhealth_contribution_test(expected, monthly)
+    msg = 'Incorrect Phil Health contribution'
+    assert_equal expected,   PHILHEALTH_2012.call(monthly), msg
+  end
+  
 end

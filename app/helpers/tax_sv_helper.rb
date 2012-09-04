@@ -74,4 +74,15 @@ module TaxSvHelper
     return o
   end
   
+  PHILHEALTH_2012 = lambda do |monthlyIncome|
+
+    val = ((monthlyIncome/1000).floor * 12.50)
+    val = 50  if monthlyIncome < 5000
+    val = 375 if monthlyIncome >= 30000
+    
+    return val
+  end
+
+
+  
 end
