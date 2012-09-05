@@ -3,6 +3,56 @@ include TaxSvHelper
 
 class TaxSvHelperTest < ActionView::TestCase
 
+  test 'Test Calculate Income Tax (Accurate up until .15 cents)' do
+
+    tax = nil
+    
+    calc = lambda do |expected, status, dependents, reg_income, month_income, month_num, ytd_tax, ytd_inc|
+      tax = calc_tax(status, dependents, reg_income, month_income, month_num, ytd_tax, ytd_inc)
+      msg = "Incorrect Monthly Income Tax Calculation: #{tax}"
+      monthly = tax[:monthly_income_tax]
+      assert_in_delta expected, monthly, 0.15, msg
+    end
+
+    
+    #Expected results are calculated using
+    #http://birtaxcalculator.com/calculators/bir_withholding_tax_computation_2009
+    calc.call(5812.17, :single, 0, 32000.00, 32000.00, 1, 0, 0)
+    calc.call(5187.27, :single, 1, 32000.00, 32000.00, 1, 0, 0)
+    calc.call(4562.07, :single, 2, 32000.00, 32000.00, 1, 0, 0)
+    calc.call(3975.50, :single, 3, 32000.00, 32000.00, 1, 0, 0)
+    calc.call(3454.50, :single, 4, 32000.00, 32000.00, 1, 0, 0)
+
+    calc.call(1510.83, :single, 0, 15000.00, 15000.00, 1, 0, 0)
+    calc.call(1510.83, :single, 0, 15000.00, 15000.00, 2, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call( 520.08, :single, 0, 15000.00, 10000.00, 3, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call(1509.81, :single, 0, 15000.00, 15000.00, 4, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call(1509.81, :single, 0, 15000.00, 15000.00, 5, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call(1509.81, :single, 0, 15000.00, 15000.00, 6, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call(1509.81, :single, 0, 15000.00, 15000.00, 7, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call(1509.81, :single, 0, 15000.00, 15000.00, 8, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call(1509.81, :single, 0, 15000.00, 15000.00, 9, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call(1509.81, :single, 0, 15000.00, 15000.00, 10, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call(1509.81, :single, 0, 15000.00, 15000.00, 11, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    calc.call(1509.81, :single, 0, 15000.00, 15000.00, 12, tax[:new_ytd_tax], tax[:new_ytd_inc])
+    puts tax
+
+  end
+
+  test 'Test Annual Tax calculation' do
+    msg = 'Incorrect Annaul Tax calculation'
+    assert_equal    250.00, calc_annual_tax(   5000.00), msg
+    assert_equal    500.00, calc_annual_tax(  10000.00), msg
+    assert_equal    500.10, calc_annual_tax(  10001.00), msg
+    assert_equal   3250.00, calc_annual_tax(  35000.00), msg
+    assert_equal  14500.00, calc_annual_tax( 100000.00), msg
+    assert_equal  17130.00, calc_annual_tax( 113150.00), msg
+    assert_equal  37500.00, calc_annual_tax( 200000.00), msg
+    assert_equal  65000.00, calc_annual_tax( 300000.00), msg
+    assert_equal 189000.00, calc_annual_tax( 700000.00), msg
+    assert_equal 324040.00, calc_annual_tax(1122000.00), msg
+  end
+
   test "Test Personal Exemption calculation" do
    
     personal_exemption_test(:single,  0, 50000.00)
@@ -22,15 +72,13 @@ class TaxSvHelperTest < ActionView::TestCase
   
   
   test "Test SSS Contribution Calculation 2012" do
-  
     sss_contriubtion_test(  500.00,    0.00,   0.00)
-	sss_contriubtion_test( 1000.00,   70.70,  33.30)
-	sss_contriubtion_test( 5250.00,  388.70, 183.30)
-	sss_contriubtion_test(10000.00,  706.70, 333.30)
-	sss_contriubtion_test(14000.00,  989.30, 466.70)
-	sss_contriubtion_test(15000.00, 1060.00, 500.00)
+	  sss_contriubtion_test( 1000.00,   70.70,  33.30)
+	  sss_contriubtion_test( 5250.00,  388.70, 183.30)
+	  sss_contriubtion_test(10000.00,  706.70, 333.30)
+	  sss_contriubtion_test(14000.00,  989.30, 466.70)
+	  sss_contriubtion_test(15000.00, 1060.00, 500.00)
     sss_contriubtion_test(30000.00, 1060.00, 500.00)
-    
   end
   
   def sss_contriubtion_test(monthlyIncome, er, ee)
@@ -52,6 +100,11 @@ class TaxSvHelperTest < ActionView::TestCase
   def philhealth_contribution_test(expected, monthly)
     msg = 'Incorrect Phil Health contribution'
     assert_equal expected,   PHILHEALTH_2012.call(monthly), msg
+  end
+
+  test "Test Pag Ibig Contribution Calculation 2012" do
+    assert_equal 300.00, calc_pagibig(15000.00)
+    assert_equal 220.00, calc_pagibig(11000.00)
   end
   
 end

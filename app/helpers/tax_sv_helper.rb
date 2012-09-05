@@ -1,9 +1,77 @@
+require 'bigdecimal'
+
 module TaxSvHelper
 
-	def calc
-		tax = 100.00;
-	end
-	
+  def calc_tax(status, dependents, reg_monthly_inc, this_months_inc,
+    month_number, ytd_tax_paid, ytd_inc)
+
+    exemption  = calc_personal_tax_exemption(status, dependents)
+    sss        = calc_sss_contribution_2012(reg_monthly_inc)
+    phil_health = calc_philhealth_2012(reg_monthly_inc)
+    pagibig    = calc_pagibig(reg_monthly_inc)
+
+    total_contributions = (sss[:ee] + phil_health + pagibig) * 12.00
+    total_contributions = 30000 if total_contributions > 30000
+
+    remain_months = 12.00 - month_number
+    proj_inc = this_months_inc + (this_months_inc * (remain_months)) + ytd_inc
+    taxable_inc = proj_inc - exemption - total_contributions
+
+    annual_income_tax = calc_annual_tax(taxable_inc)
+    tax_to_pay = annual_income_tax - ytd_tax_paid
+    
+    monthly_tax = (tax_to_pay/(remain_months + 1.00)).round(4)
+    ytd_tax = (monthly_tax + ytd_tax_paid).round(4)
+
+    tax = { 
+      personal_exemption: exemption,
+      sss_contribution: sss,
+      phil_health_contribution: phil_health,
+      pag_ibig_contribution: pagibig,
+      total_contributions: total_contributions,
+      remain_months: remain_months,
+      projected_annual_income: proj_inc,
+      taxable_inc: taxable_inc,
+      projected_annual_income_tax: annual_income_tax,
+      remaining_tax_to_pay: tax_to_pay.round(4),
+      monthly_income_tax: monthly_tax,
+      new_ytd_inc: (ytd_inc + this_months_inc),
+      new_ytd_tax: ytd_tax
+    }
+    
+
+  end
+
+  def calc_annual_tax(annual_taxable_income)
+
+    bracket_1 =  10000.00
+    bracket_2 =  30000.00
+    bracket_3 =  70000.00
+    bracket_4 = 140000.00
+    bracket_5 = 250000.00
+    bracket_6 = 500000.00
+
+    inc = annual_taxable_income
+
+    tax = 0
+
+    calc = lambda do |bracket, percentage, add_on|
+      ((inc - bracket) * percentage) + add_on
+    end
+
+    tax = inc * 0.05 if inc <= bracket_1
+    tax = calc.call(bracket_1, 0.10,   500.00)  if inc.between? bracket_1, bracket_2
+    tax = calc.call(bracket_2, 0.15,  2500.00)  if inc.between? bracket_2, bracket_3
+    tax = calc.call(bracket_3, 0.20,  8500.00)  if inc.between? bracket_3, bracket_4
+    tax = calc.call(bracket_4, 0.25, 22500.00)  if inc.between? bracket_4, bracket_5
+    tax = calc.call(bracket_5, 0.30, 50000.00)  if inc.between? bracket_5, bracket_6
+    tax = calc.call(bracket_6, 0.32, 125000.00) if inc > bracket_6
+    
+    return tax
+  end
+
+
+  
 #=================================================
 #    Personal Excemptions --- START
 #    RA 9504 SEC 4
@@ -11,7 +79,6 @@ module TaxSvHelper
 #=================================================
 
   PHTaxExemptionsPerDependent = 25000.00;
-
   PHTaxExemptions = {
     single: 50000.00,
     married: 50000.00
@@ -73,16 +140,30 @@ module TaxSvHelper
     o = {er: 1060.00, ee: 500.00} if inc >= 14750
     return o
   end
+
+  def calc_philhealth_2012(monthly_income)
+    PHILHEALTH_2012.call(monthly_income)
+  end
   
   PHILHEALTH_2012 = lambda do |monthlyIncome|
-
     val = ((monthlyIncome/1000).floor * 12.50)
     val = 50  if monthlyIncome < 5000
     val = 375 if monthlyIncome >= 30000
-    
     return val
   end
 
+  def calc_pagibig(monthlyIncome, option={})
+    proc = option[:version] || PAGIBIG_2012
+    proc.call(monthlyIncome)
+  end
+
+  PAGIBIG_2012 = lambda do |monthlyIncome|
+    if monthlyIncome < 1500
+      monthlyIncome * 0.01 
+    else
+      monthlyIncome * 0.02
+    end
+  end
 
   
 end
