@@ -24,8 +24,4 @@ class TaxSvController < ApplicationController
 
   end
 
-
-
-  
-
 end
