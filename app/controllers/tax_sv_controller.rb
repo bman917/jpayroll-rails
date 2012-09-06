@@ -9,7 +9,21 @@ class TaxSvController < ApplicationController
   def calc
     inc = params[:income].to_f
     @tax = calc_tax(:single, 0, inc, inc,0,0,0)
+
   end
+
+  def calco
+    inc = params[:income].to_f
+    @tax = calc_tax(:single, 0, inc, inc,0,0,0)
+    puts inc
+    
+
+    respond_to do |format|
+      format.js
+    end
+
+  end
+
 
 
   

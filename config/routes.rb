@@ -6,6 +6,8 @@ RailsApp::Application.routes.draw do
   get "tax_sv/test"
   get "tax_sv/new"
   post "tax_sv/calc"
+  post "tax_sv/calco"
+  get "tax_sv/calco"
 
   get "say/hello"
 
