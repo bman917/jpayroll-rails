@@ -40,6 +40,8 @@ class TaxSvHelperTest < ActionView::TestCase
     msg = 'Incorrect Monthly Taxable Income'
     assert_in_delta 9429.16, tax[:monthly_taxable_income], 0.15, msg
 
+    tax = calculate_tax(:single, 0, 15000.00, 0, 0, 1, 0, 0)
+    assert_in_delta 1510.83, tax[:monthly_income_tax], 0.15
   end
 
   test 'Test Annual Tax calculation' do

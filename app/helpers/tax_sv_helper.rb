@@ -2,6 +2,14 @@ require 'bigdecimal'
 
 module TaxSvHelper
 
+  def calculate_tax(status, dependents, reg_monthly_inc, allowances, deductions,
+    month_number, ytd_tax_paid, ytd_inc)
+
+    this_months_inc = reg_monthly_inc + allowances - deductions
+    calc_tax(status, dependents, reg_monthly_inc, this_months_inc, month_number,
+      ytd_tax_paid, ytd_inc)
+  end
+
   def calc_tax(status, dependents, reg_monthly_inc, this_months_inc,
     month_number, ytd_tax_paid, ytd_inc)
 
