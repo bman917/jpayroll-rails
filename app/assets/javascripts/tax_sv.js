@@ -14,4 +14,6 @@ function finished_loading() {
     $("#loading").hide();
     $("#submit_button").attr('disabled', false);
     $('div.result').spin(false);
+    $('#extra_income').attr('value', '0');
+    $('#deductions').attr('value', '0');
 }
