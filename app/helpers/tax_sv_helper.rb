@@ -15,9 +15,10 @@ module TaxSvHelper
 
     remain_months = 12.00 - month_number
     proj_inc = this_months_inc + (this_months_inc * (remain_months)) + ytd_inc
-    taxable_inc = proj_inc - exemption - total_contributions
-
-    annual_income_tax = calc_annual_tax(taxable_inc)
+    ann_taxable_inc = proj_inc - exemption - total_contributions
+    monthly_taxable_income = (ann_taxable_inc/(12)).round(4)
+    
+    annual_income_tax = calc_annual_tax(ann_taxable_inc)
     tax_to_pay = annual_income_tax[:tax] - ytd_tax_paid
     
     monthly_tax = (tax_to_pay/(remain_months + 1.00)).round(4)
@@ -31,7 +32,8 @@ module TaxSvHelper
       total_contributions: total_contributions,
       remain_months: remain_months,
       projected_annual_income: proj_inc,
-      taxable_inc: taxable_inc,
+      taxable_inc: ann_taxable_inc,
+      monthly_taxable_income: monthly_taxable_income,
       projected_annual_income_tax: annual_income_tax,
       remaining_tax_to_pay: tax_to_pay.round(4),
       monthly_income_tax: monthly_tax,

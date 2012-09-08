@@ -9,6 +9,7 @@ s += addColumn("<%=number_to_currency(@tax[:projected_annual_income])%>");
 s += addColumn("<%=number_to_currency(@tax[:personal_exemption])%>");
 s += addColumn("<%=number_to_currency(@tax[:sss_contribution][:ee])%>");
 s += addColumn("<%=number_to_currency(@tax[:phil_health_contribution])%>");
+s += addColumn("<%=number_to_currency(@tax[:monthly_taxable_income])%>");
 s += addColumn("<%=(@tax[:percentage]*100).to_i%>&#37;");
 s += addColumn("<%=number_to_currency(@tax[:monthly_income_tax])%>");
 s += "</tr>";

@@ -36,6 +36,9 @@ class TaxSvHelperTest < ActionView::TestCase
     calc.call(1509.81, :single, 0, 15000.00, 15000.00, 11, tax[:new_ytd_tax], tax[:new_ytd_inc])
     calc.call(1509.81, :single, 0, 15000.00, 15000.00, 12, tax[:new_ytd_tax], tax[:new_ytd_inc])
     puts tax
+    
+    msg = 'Incorrect Monthly Taxable Income'
+    assert_in_delta 9429.16, tax[:monthly_taxable_income], 0.15, msg
 
   end
 
