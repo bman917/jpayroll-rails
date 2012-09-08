@@ -16,8 +16,10 @@ $('#ytd_inc').attr('value', '<%=@tax[:new_ytd_inc]%>');
 $('#ytd_tax').attr('value', '<%=@tax[:new_ytd_tax]%>');
 $('#month_no').val(month+1);
 
+finished_loading();
+
 // If you reach december, do not enable the submit button
-<% if params[:month_no].to_i < 12  %>
-$('#submit_button').attr('disabled', false);
-$('div.result').spin(false);
+<% if params[:month_no].to_i == 12  %>
+$("#submit_button").attr('disabled', true);
+$("#submit_button").after("Reached end of tax year. Click on 'clear'");
 <% end %>

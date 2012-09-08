@@ -3,7 +3,7 @@
 <span class="version">beta v1.0</span>
 
 <div class="tax_calc_form">
-  <%=form_tag tax_sv_calco_path, remote: true, onsubmit: '$(\'#submit_button\').attr(\'disabled\', true); $(\'div.result\').spin()' do %>
+  <%=form_tag tax_sv_calco_path, remote: true, onsubmit: 'loading()' do %>
 
 <fieldset>
   
@@ -51,5 +51,8 @@
     </tr>
 
   </table>
+  <div id="loading" hidden="true">
+    Calculating Tax. Please wait...
+  </div>
 
 </div>
