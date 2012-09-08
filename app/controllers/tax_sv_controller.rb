@@ -14,7 +14,11 @@ class TaxSvController < ApplicationController
 
   def calco
     inc = params[:income].to_f
-    @tax = calc_tax(:single, 0, inc, inc,0,0,0)
+    month = params[:month_no].to_i
+    dependents = params[:dependents].to_i
+    
+    puts "Month #{month}"
+    @tax = calc_tax(:single,dependents , inc, inc,month,0,0)
     puts inc
     
 

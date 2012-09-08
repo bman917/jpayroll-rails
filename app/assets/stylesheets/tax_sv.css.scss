@@ -1,3 +1,38 @@
 // Place all the styles related to the TaxSv controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+    width: 700px;
+}
+div.result {
+    margin-top: 50px;
+    table {
+        border-style: dashed;
+        border-width: 1px;
+    }
+
+}
+
+.tax_calc_form {
+    
+    display: block;
+
+    label {
+        float: left;
+        width: 10em;
+        text-align: right;
+        clear: left;
+        margin-right: 15px;
+    }
+
+    input {
+        display: block;
+    }
+
+    select {
+        display: block;
+    }
+
+    .submit { float: left }
+}
+

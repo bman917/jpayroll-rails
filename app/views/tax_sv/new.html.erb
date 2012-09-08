@@ -1,11 +1,43 @@
-<h1>Calculate Income Tax</h1>
+<h1>Income Tax Calculator</h1>
+
+<div class="tax_calc_form">
+  <%=form_tag(tax_sv_calco_path, remote: true) do %>
+
+<fieldset>
+  
+<%= label_tag 'income', 'Regular Monthly Income'%>
+<%= text_field_tag :income %>
+
+    
+    <%= label_tag 'dependents', 'Number of Dependents' %>
+    <%= select_tag :dependents, "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %>
 
 
-<%=form_tag(tax_sv_calco_path, remote: true) do %>
-  <%= text_field_tag :income %>
-  <%= submit_tag 'Submit' %>
-<% end %>
+    <%= label_tag 'month_no', 'Month Number' %>
+    <%= select_month(Date.today, {}, {name: 'month_no'}) %>
 
-<div class="mtax">
-<span>Monthly Income Tax</span><p/>
+    <%= label_tag 'ytd_inc', 'Year-to-date Income' %>
+    <%= text_field_tag :ytd_inc %>
+
+    <%= label_tag 'ytd_inc', 'Year-to-date Income' %>
+    <%= text_field_tag :ytd_tax %>
+  
+    
+
+   </fieldset>
+
+<%= submit_tag 'Submit', {class: 'submit'} %>
+   
+  <% end %>
+</div>
+
+<div class="result">
+  <table>
+    <tr>
+      <th>Projected Annual Income</th>
+      <th>Monthly Income Tax</th>
+    </tr>
+
+  </table>
+
 </div>
