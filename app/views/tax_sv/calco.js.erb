@@ -1,3 +1,22 @@
-var lastRow = $('div.result tr:last');
-var newRow = lastRow.after("<tr><td><%=number_to_currency(@tax[:projected_annual_income])%></td><td><%=number_to_currency(@tax[:monthly_income_tax])%></td></tr>");
+function addColumn(value) {
+    return "<td>" + value + "</td>";
+}
+var month = <%=(params[:month_no].to_i)%>;
+var s = "<tr>";
 
+s += addColumn("<%=Date::ABBR_MONTHNAMES[params[:month_no].to_i]%>");
+s += addColumn("<%=number_to_currency(@tax[:projected_annual_income])%>");
+s += addColumn("<%=number_to_currency(@tax[:personal_exemption])%>");
+s += addColumn("<%=number_to_currency(@tax[:sss_contribution][:ee])%>");
+s += addColumn("<%=number_to_currency(@tax[:phil_health_contribution])%>");
+s += addColumn("<%=number_to_currency(@tax[:monthly_income_tax])%>");
+s += "</tr>";
+$('div.result tr:last').after(s);
+$('#ytd_inc').attr('value', '<%=@tax[:new_ytd_inc]%>');
+$('#ytd_tax').attr('value', '<%=@tax[:new_ytd_tax]%>');
+$('#month_no').val(month+1);
+
+// If you reach december, do not enable the submit button
+<% if params[:month_no].to_i < 12  %>
+$('#submit_button').attr('disabled', false);
+<% end %>

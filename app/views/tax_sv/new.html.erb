@@ -1,40 +1,51 @@
-<h1>Income Tax Calculator</h1>
+
+<h1>Philippine Income Tax Calculator</h1>
+<span class="version">beta v1.0</span>
 
 <div class="tax_calc_form">
-  <%=form_tag(tax_sv_calco_path, remote: true) do %>
+  <%=form_tag tax_sv_calco_path, remote: true, onsubmit: '$(\'#submit_button\').attr(\'disabled\', true)' do %>
 
 <fieldset>
   
 <%= label_tag 'income', 'Regular Monthly Income'%>
-<%= text_field_tag :income %>
+<%= text_field_tag :income, {}, value: 30000.00 %>
 
+<%= label_tag 'deductions', 'Deductions'%>
+<%= text_field_tag :deductions, {}, value: 0 %>
     
     <%= label_tag 'dependents', 'Number of Dependents' %>
     <%= select_tag :dependents, "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %>
 
 
     <%= label_tag 'month_no', 'Month Number' %>
-    <%= select_month(Date.today, {}, {name: 'month_no'}) %>
+    <%= select_month(1, {}, {id: 'month_no', name: 'month_no'}) %>
 
     <%= label_tag 'ytd_inc', 'Year-to-date Income' %>
-    <%= text_field_tag :ytd_inc %>
+    <%= text_field_tag :ytd_inc, {}, value: 0  %>
 
-    <%= label_tag 'ytd_inc', 'Year-to-date Income' %>
-    <%= text_field_tag :ytd_tax %>
+    <%= label_tag 'ytd_tax', 'Year-to-date Tax' %>
+    <%= text_field_tag :ytd_tax, {}, value: 0 %>
   
     
 
    </fieldset>
 
-<%= submit_tag 'Submit', {class: 'submit'} %>
+<div class="buttons">
+<%= submit_tag 'Submit', id: 'submit_button' %>
+<%= button_tag 'Clear', class: 'clear_button', onClick: 'window.location.reload()' %>
+</div>
    
   <% end %>
 </div>
 
 <div class="result">
-  <table>
+  <table id="table-5">
     <tr>
+      <th>Month</th>
       <th>Projected Annual Income</th>
+      <th>Personal Exemptions</th>
+      <th>SSS</th>
+      <th>Phil-Health</th>
       <th>Monthly Income Tax</th>
     </tr>
 

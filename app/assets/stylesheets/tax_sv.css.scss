@@ -3,23 +3,29 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 body {
     width: 700px;
+    
 }
-div.result {
-    margin-top: 50px;
-    table {
-        border-style: dashed;
-        border-width: 1px;
-    }
 
+.tax_calc_form div.buttons input { 
+    display: inline
+}
+
+.clear_button {
+    float: right
+}
+
+div.result {
+    margin-top: 25px;
 }
 
 .tax_calc_form {
     
+    width: 425px;
     display: block;
 
     label {
         float: left;
-        width: 10em;
+        width: 150px;
         text-align: right;
         clear: left;
         margin-right: 15px;
@@ -36,3 +42,38 @@ div.result {
     .submit { float: left }
 }
 
+
+table {
+	border-collapse: collapse;
+	
+	margin: 5px;
+	font-size: .9em;
+}
+
+th {
+	background: #3e83c9;
+	color: #fff;
+	font-weight: bold;
+	padding: 2px 11px;
+	text-align: left;
+	border-right: 1px solid #fff;
+	line-height: 1.2;
+}
+
+td {
+	padding: 6px 9px;
+	border-bottom: 1px solid #95bce2;
+	vertical-align: top;
+}
+
+td * {
+	padding: 6px 11px;
+}
+
+tr.alt td {
+	background: #ecf6fc;
+}
+
+tr.over td, tr:hover td {
+	background: #bcd4ec;
+}
