@@ -47,7 +47,7 @@ table {
 	border-collapse: collapse;
 	
 	margin: 5px;
-	font-size: .9em;
+	font-size: .8em;
 }
 
 th {
@@ -64,10 +64,11 @@ td {
 	padding: 6px 9px;
 	border-bottom: 1px solid #95bce2;
 	vertical-align: top;
+        font-size: 1em;
 }
 
 td * {
-	padding: 6px 11px;
+	padding: 6px 9px;
 }
 
 tr.alt td {
