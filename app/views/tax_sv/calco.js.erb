@@ -19,4 +19,5 @@ $('#month_no').val(month+1);
 // If you reach december, do not enable the submit button
 <% if params[:month_no].to_i < 12  %>
 $('#submit_button').attr('disabled', false);
+$('div.result').spin(false);
 <% end %>
