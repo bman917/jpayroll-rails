@@ -7,13 +7,13 @@
 
 <fieldset>
   
-<%= label_tag 'income', 'Regular Monthly Income'%>
+<%= label_tag 'income', 'Monthly Income'%>
 <%= text_field_tag :income, {}, value: 30000.00 %>
 
 <%= label_tag 'deductions', 'Deductions'%>
 <%= text_field_tag :deductions, {}, value: 0 %>
     
-    <%= label_tag 'dependents', 'Number of Dependents' %>
+    <%= label_tag 'dependents', 'Dependents' %>
     <%= select_tag :dependents, "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %>
 
 
