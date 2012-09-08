@@ -9,6 +9,7 @@ s += addColumn("<%=number_to_currency(@tax[:projected_annual_income])%>");
 s += addColumn("<%=number_to_currency(@tax[:personal_exemption])%>");
 s += addColumn("<%=number_to_currency(@tax[:sss_contribution][:ee])%>");
 s += addColumn("<%=number_to_currency(@tax[:phil_health_contribution])%>");
+s += addColumn("<%=(@tax[:percentage]*100).to_i%>&#37;");
 s += addColumn("<%=number_to_currency(@tax[:monthly_income_tax])%>");
 s += "</tr>";
 $('div.result tr:last').after(s);
@@ -18,7 +19,7 @@ $('#month_no').val(month+1);
 
 finished_loading();
 
-// If you reach december, do not enable the submit button
+// If you reach December, do not enable the submit button
 <% if params[:month_no].to_i == 12  %>
 $("#submit_button").attr('disabled', true);
 $("#submit_button").after("Reached end of tax year. Click on 'clear'");

@@ -41,16 +41,16 @@ class TaxSvHelperTest < ActionView::TestCase
 
   test 'Test Annual Tax calculation' do
     msg = 'Incorrect Annaul Tax calculation'
-    assert_equal    250.00, calc_annual_tax(   5000.00), msg
-    assert_equal    500.00, calc_annual_tax(  10000.00), msg
-    assert_equal    500.10, calc_annual_tax(  10001.00), msg
-    assert_equal   3250.00, calc_annual_tax(  35000.00), msg
-    assert_equal  14500.00, calc_annual_tax( 100000.00), msg
-    assert_equal  17130.00, calc_annual_tax( 113150.00), msg
-    assert_equal  37500.00, calc_annual_tax( 200000.00), msg
-    assert_equal  65000.00, calc_annual_tax( 300000.00), msg
-    assert_equal 189000.00, calc_annual_tax( 700000.00), msg
-    assert_equal 324040.00, calc_annual_tax(1122000.00), msg
+    assert_equal    250.00, calc_annual_tax(   5000.00)[:tax], msg
+    assert_equal    500.00, calc_annual_tax(  10000.00)[:tax], msg
+    assert_equal    500.10, calc_annual_tax(  10001.00)[:tax], msg
+    assert_equal   3250.00, calc_annual_tax(  35000.00)[:tax], msg
+    assert_equal  14500.00, calc_annual_tax( 100000.00)[:tax], msg
+    assert_equal  17130.00, calc_annual_tax( 113150.00)[:tax], msg
+    assert_equal  37500.00, calc_annual_tax( 200000.00)[:tax], msg
+    assert_equal  65000.00, calc_annual_tax( 300000.00)[:tax], msg
+    assert_equal 189000.00, calc_annual_tax( 700000.00)[:tax], msg
+    assert_equal 324040.00, calc_annual_tax(1122000.00)[:tax], msg
   end
 
   test "Test Personal Exemption calculation" do
