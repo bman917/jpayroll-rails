@@ -2,10 +2,10 @@ require 'bigdecimal'
 
 module TaxSvHelper
 
-  def calculate_tax(status, dependents, reg_monthly_inc, allowances, deductions,
+  def calculate_tax(status, dependents, reg_monthly_inc, extra_taxable_income, deductions,
     month_number, ytd_tax_paid, ytd_inc)
 
-    this_months_inc = reg_monthly_inc + allowances - deductions
+    this_months_inc = reg_monthly_inc + extra_taxable_income - deductions
     calc_tax(status, dependents, reg_monthly_inc, this_months_inc, month_number,
       ytd_tax_paid, ytd_inc)
   end
@@ -24,6 +24,7 @@ module TaxSvHelper
     remain_months = 12.00 - month_number
     proj_inc = this_months_inc + (this_months_inc * (remain_months)) + ytd_inc
     ann_taxable_inc = proj_inc - exemption - total_contributions
+    ann_taxable_inc = 0.00 if ann_taxable_inc < 0
     monthly_taxable_income = (ann_taxable_inc/(12)).round(4)
     
     annual_income_tax = calc_annual_tax(ann_taxable_inc)
@@ -70,22 +71,27 @@ module TaxSvHelper
 
     inc = annual_taxable_income
 
-    tax = 0
+    t = {tax: 0.00, bracket: 0.00, percentage: 0.00, add_on: 0.00}
 
-    calc = lambda do |bracket, percentage, add_on|
-      tax = ((inc - bracket) * percentage) + add_on
-      inc_tax = {tax: tax, bracket: bracket_hash[bracket], percentage: percentage, add_on: add_on}
+    calc = lambda do |bracket, percentage_param, add_on|
+      inc_tax = ((inc - bracket) * percentage_param) + add_on
+      t = {tax: inc_tax, bracket: bracket_hash[bracket], percentage: percentage_param, add_on: add_on}
+      if inc_tax <= 0
+        t[:tax] = 0.00
+        t[:bracket] = 0.00
+        t[:percentage] = 0.00
+      end
     end
 
-    tax = calc.call(bracket[0], 0.05,     0.00)  if inc <= bracket[1]
-    tax = calc.call(bracket[1], 0.10,   500.00)  if inc.between? bracket[1], bracket[2]
-    tax = calc.call(bracket[2], 0.15,  2500.00)  if inc.between? bracket[2], bracket[3]
-    tax = calc.call(bracket[3], 0.20,  8500.00)  if inc.between? bracket[3], bracket[4]
-    tax = calc.call(bracket[4], 0.25, 22500.00)  if inc.between? bracket[4], bracket[5]
-    tax = calc.call(bracket[5], 0.30, 50000.00)  if inc.between? bracket[5], bracket[6]
-    tax = calc.call(bracket[6], 0.32, 125000.00) if inc > bracket[6]
-    
-    return tax
+    calc.call(bracket[0], 0.05,     0.00)  if inc <= bracket[1]
+    calc.call(bracket[1], 0.10,   500.00)  if inc.between? bracket[1], bracket[2]
+    calc.call(bracket[2], 0.15,  2500.00)  if inc.between? bracket[2], bracket[3]
+    calc.call(bracket[3], 0.20,  8500.00)  if inc.between? bracket[3], bracket[4]
+    calc.call(bracket[4], 0.25, 22500.00)  if inc.between? bracket[4], bracket[5]
+    calc.call(bracket[5], 0.30, 50000.00)  if inc.between? bracket[5], bracket[6]
+    calc.call(bracket[6], 0.32, 125000.00) if inc > bracket[6]
+
+    return t
   end
 
 

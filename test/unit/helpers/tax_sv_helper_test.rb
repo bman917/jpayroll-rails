@@ -3,7 +3,7 @@ include TaxSvHelper
 
 class TaxSvHelperTest < ActionView::TestCase
 
-  test 'Test Calculate Income Tax (Accurate up until .15 cents)' do
+  test 'Test Calculate Income Tax 2012 (Accurate up until .15 cents)' do
 
     tax = nil
     
@@ -14,7 +14,6 @@ class TaxSvHelperTest < ActionView::TestCase
       assert_in_delta expected, monthly, 0.15, msg
     end
 
-    
     #Expected results are calculated using
     #http://birtaxcalculator.com/calculators/bir_withholding_tax_computation_2009
     calc.call(5812.17, :single, 0, 32000.00, 32000.00, 1, 0, 0)
@@ -36,13 +35,30 @@ class TaxSvHelperTest < ActionView::TestCase
     calc.call(1509.81, :single, 0, 15000.00, 15000.00, 11, tax[:new_ytd_tax], tax[:new_ytd_inc])
     calc.call(1509.81, :single, 0, 15000.00, 15000.00, 12, tax[:new_ytd_tax], tax[:new_ytd_inc])
     puts tax
-    
+
     msg = 'Incorrect Monthly Taxable Income'
     assert_in_delta 9429.16, tax[:monthly_taxable_income], 0.15, msg
 
     tax = calculate_tax(:single, 0, 15000.00, 0, 0, 1, 0, 0)
     assert_in_delta 1510.83, tax[:monthly_income_tax], 0.15
   end
+
+  test 'Test Zero Income Tax 2012' do
+     puts 'Test Zero Income Tax 2012'
+      
+     calc = lambda do |status, dependents, month_income|
+        tax = calc_tax(status, dependents, month_income, month_income, 1, 0.00, 0.00)
+        assert_equal 0.00, tax[:monthly_income_tax], "Monthly Income should not be negative: #{tax}"
+        assert_equal 0.00, tax[:taxable_inc], "Taxable Income should not be negative: #{tax}"
+        assert_equal 0.00, tax[:percentage], "Percentage should be zero: #{tax}"
+        assert_equal 0.00, tax[:bracket], "Bracket should be zero: #{tax}"
+     end
+
+     calc.call(:single, 0, 4250.00)
+     calc.call(:single, 0, 3000.00)
+
+  end
+
 
   test 'Test Annual Tax calculation' do
     msg = 'Incorrect Annaul Tax calculation'
