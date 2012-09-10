@@ -58,10 +58,16 @@ th {
 	text-align: left;
 	border-right: 1px solid #fff;
 	line-height: 1.2;
+        width: 100px
 }
 
+.month, .tax_bracket{ width: 30px}
+
+.sss { width: 70px }
+
+
 td {
-	padding: 6px 9px;
+	padding: 4px 7px;
 	border-bottom: 1px solid #95bce2;
 	vertical-align: top;
         font-size: 1em;
@@ -69,7 +75,7 @@ td {
 }
 
 td * {
-	padding: 6px 9px;
+	padding: 4px 7px;
 }
 
 tr.alt td {

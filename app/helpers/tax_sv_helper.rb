@@ -31,6 +31,7 @@ module TaxSvHelper
     tax_to_pay = annual_income_tax[:tax] - ytd_tax_paid
     
     monthly_tax = (tax_to_pay/(remain_months + 1.00)).round(4)
+    net_monthly_pay = this_months_inc - sss[:ee] - phil_health - pagibig - monthly_tax
     ytd_tax = (monthly_tax + ytd_tax_paid).round(4)
 
     tax = { 
@@ -46,6 +47,7 @@ module TaxSvHelper
       projected_annual_income_tax: annual_income_tax,
       remaining_tax_to_pay: tax_to_pay.round(4),
       monthly_income_tax: monthly_tax,
+      net_monthly_pay: net_monthly_pay,
       new_ytd_inc: (ytd_inc + this_months_inc),
       new_ytd_tax: ytd_tax
     }
