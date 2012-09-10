@@ -45,9 +45,9 @@ div.result {
 
 table {
 	border-collapse: collapse;
-	
-	margin: 5px;
-	font-size: .8em;
+	width: 100%;
+	margin: 3px;
+	font-size: .75em;
 }
 
 th {
@@ -58,16 +58,17 @@ th {
 	text-align: left;
 	border-right: 1px solid #fff;
 	line-height: 1.2;
-        width: 100px
+        
 }
 
-.month, .tax_bracket{ width: 30px}
+.month, .tax_bracket{ width: 20px}
 
-.sss { width: 70px }
+.sss { width: 50px }
+.pe { width: 70px }
 
 
 td {
-	padding: 4px 7px;
+	padding: 3px 3px;
 	border-bottom: 1px solid #95bce2;
 	vertical-align: top;
         font-size: 1em;
@@ -75,7 +76,7 @@ td {
 }
 
 td * {
-	padding: 4px 7px;
+	padding: 3px 3px;
 }
 
 tr.alt td {
