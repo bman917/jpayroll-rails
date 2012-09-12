@@ -2,8 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 function loading() {
     $("#loading").show();
     $("#submit_button").attr('disabled', true);
@@ -17,3 +15,13 @@ function finished_loading() {
     $('#extra_income').attr('value', '0');
     $('#deductions').attr('value', '0');
 }
+
+/*
+ * Bind change event so that selecting a payment schedule will
+ * also change the Income label.
+ */
+ $(document).ready(function() {
+  $('#schedule').change(function() {
+    $('#income_label').text($('#schedule option:selected').text() + " Income");
+  });
+ });

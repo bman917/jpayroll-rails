@@ -20,10 +20,14 @@ class TaxSvController < ApplicationController
     dependents = params[:dependents].to_i
     ytd_inc = params[:ytd_inc].to_f
     ytd_tax = params[:ytd_tax].to_f
-    
+    schedule = params[:schedule]
+
     puts "Month #{month}"
     puts "ytd_inc #{ytd_inc}"
-    puts inc
+    puts "Schedule: #{schedule}"
+
+    inc *= 2 if schedule == 'Semi-Monthly'
+    inc *= 4 if schedule == 'Weekly'
     
     @tax = calculate_tax(:single,dependents , inc, extra_income, deductions,month,ytd_tax,ytd_inc)
     
