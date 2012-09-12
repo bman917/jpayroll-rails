@@ -1,4 +1,6 @@
 RailsApp::Application.routes.draw do
+  resources :holidays
+
   resources :tax_records
 
   resources :taxes
