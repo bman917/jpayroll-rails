@@ -10,7 +10,7 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body id="main">
   <div id="nav">
      <%= link_to "Tax Calculator", tax_path %>
      <%= link_to "Holidays", holidays_path %>
@@ -19,7 +19,7 @@
 <%= yield %>
 
   <div id="footer">
-    <span class="version">v1.12.9.13 (beta)</span>
+    <span class="version">v1.12.9.13 (alpha)</span>
   </div>
 </body>
 </html>

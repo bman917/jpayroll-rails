@@ -5,6 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Holiday.delete_all
+
 Holiday.create(
    date: Date.new(2012, 01, 01),
    description: %{New Year's Day},

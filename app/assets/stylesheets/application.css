@@ -40,7 +40,7 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
+body#main {
 	line-height: 1;
         height:100%;
 }
