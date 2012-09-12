@@ -1,6 +1,6 @@
 <h1>Listing holidays</h1>
 
-<table>
+<table id="holiday_table">
   <tr>
     <th>Date</th>
     <th>Description</th>
@@ -13,10 +13,10 @@
 
 <% @holidays.each do |holiday| %>
   <tr>
-    <td><%= holiday.date %></td>
-    <td><%= holiday.description %></td>
-    <td><%= holiday.holiday_type %></td>
-    <td><%= holiday.rate %></td>
+    <td class="date"><%= holiday.date.to_formatted_s(:long) %></td>
+    <td class="description"><%= holiday.description %></td>
+    <td class="holiday_type"><%= holiday.holiday_type %></td>
+    <td class="holiday_rate"><%= holiday.rate %></td>
     <td><%= link_to 'Show', holiday %></td>
     <td><%= link_to 'Edit', edit_holiday_path(holiday) %></td>
     <td><%= link_to 'Destroy', holiday, method: :delete, data: { confirm: 'Are you sure?' } %></td>

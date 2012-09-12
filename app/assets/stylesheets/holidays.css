@@ -1,0 +1,19 @@
+#holiday_table {
+    width: 80%;
+}
+#holiday_table td.date {
+    text-align: right;
+    width: 120px;
+}
+
+td.description {
+    text-align: center;
+}
+
+td.holiday_type {
+    width: 100px;
+}
+
+td.holiday_rate {
+    width: 50px;
+}
