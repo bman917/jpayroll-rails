@@ -42,7 +42,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body#main {
 	line-height: 1;
-        height:100%;
+        height: 100%;
 }
 ol, ul {
 	list-style: none;
