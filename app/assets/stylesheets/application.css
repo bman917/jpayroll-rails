@@ -80,3 +80,7 @@ table {
     bottom:0;
     width:100%;
 }
+
+.version {
+    font-size: .8em;
+}
