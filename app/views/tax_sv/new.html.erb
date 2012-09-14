@@ -1,4 +1,23 @@
 <h1>Philippine Income Tax Calculator</h1>
+
+<div class="holidays_box">
+  <p>Holidays&nbsp;<span>(<%=Time.now.year%>)</span></p>
+  <table id="monthly_holidays_table">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th class="month">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>None</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
 <div class="tax_calc_form">
   <%=form_tag tax_sv_calco_path, remote: true, onsubmit: 'loading()' do %>
 
@@ -41,6 +60,8 @@
    
   <% end %>
 </div>
+
+
 
 <div class="result">
 

@@ -1,4 +1,16 @@
 class HolidaysController < ApplicationController
+
+  def month
+    m = params[:month].to_i
+    puts "Finding Holidays for mont: #{m}"
+    @holidays = Holiday.find_by_month(m)
+    
+    @holidays.each { |h| puts h.description  }
+
+    render :json => @holidays
+
+  end
+  
   # GET /holidays
   # GET /holidays.json
   def index

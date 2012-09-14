@@ -1,5 +1,7 @@
 RailsApp::Application.routes.draw do
   resources :holidays
+  
+  match  "holidays/month/:month" => "holidays#month"
 
   resources :tax_records
 

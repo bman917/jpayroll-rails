@@ -26,6 +26,12 @@ class TaxSvController < ApplicationController
     puts "ytd_inc #{ytd_inc}"
     puts "Schedule: #{schedule}"
 
+    @holidays = Holiday.find_by_month(month)
+    @holidays.each do |h|
+      puts h.description
+    end
+
+
     inc *= 2 if schedule == 'Semi-Monthly'
     inc *= 4 if schedule == 'Weekly'
     
