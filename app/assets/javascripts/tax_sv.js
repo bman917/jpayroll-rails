@@ -17,20 +17,6 @@ function finished_loading() {
     displayHolidays();
 }
 
-/*
- * Bind change event so that selecting a payment schedule will
- * also change the Income label.
- */
- $(document).ready(function() {
-  $('#schedule').change(function() {
-    $('#income_label').text($('#schedule option:selected').text() + " Income");
-  });
-
- $('#month_no').change(displayHolidays);
- displayHolidays();
-
- });
- 
  function displayHolidays() {
    var monthSelect = $('#month_no option:selected');
    var monthNo = monthSelect.attr('value');
@@ -39,11 +25,13 @@ function finished_loading() {
      cache: false,
      url: "holidays/month/" + monthNo,
      dataType: 'json',
+     beforeSend: function() {$('div.holidays_box').spin()},
+     complete: function(){$('div.holidays_box').spin(false)},
      success: function (holidays) {
 
          $('div.holidays_box .month').text(monthSelect.text());
          $('#monthly_holidays_table tbody td').remove();
-         
+
          var rows = "";
          $.each(holidays, function(index, holiday) {
              var d = new Date(holiday.date);
@@ -54,8 +42,26 @@ function finished_loading() {
          if (rows.length == 0) {
              rows += "<tr>"+"<td>None</td><td></td></tr>";
          }
-         
+
          $('#monthly_holidays_table tbody').html(rows);
+
      }
    });
   }
+
+/*
+ * Bind change event so that selecting a payment schedule will
+ * also change the Income label.
+ */
+ $(document).ready(function() {
+     
+      $('#schedule').change(function() {
+        $('#income_label').text($('#schedule option:selected').text() + " Income");
+      });
+
+     $('#month_no').change(displayHolidays);
+     displayHolidays();
+
+ });
+ 
+
