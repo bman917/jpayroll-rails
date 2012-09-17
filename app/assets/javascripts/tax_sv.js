@@ -60,7 +60,7 @@ function finished_loading() {
       });
 
      $('#month_no').change(displayHolidays);
-     displayHolidays();
+     //displayHolidays();
 
  });
  

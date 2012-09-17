@@ -1,13 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  date: 2012-09-13
-  description: MyString
-  holiday_type: MyString
-  rate: 9.99
+holy_sunday:
+  date: 2012-09-23
+  description: Sunday Holiday
+  holiday_type: Regular
+  rate: 30.00
 
-two:
-  date: 2012-09-13
-  description: MyString
-  holiday_type: MyString
-  rate: 9.99
+holy_monday:
+  date: 2012-09-24
+  description: Holy Monday
+  holiday_type: Regular
+  rate: 30.00
+
+holy_friday:
+  date: 2012-09-21
+  description: Holy Friday
+  holiday_type: Regular
+  rate: 30.00

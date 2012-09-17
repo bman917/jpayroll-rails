@@ -1,0 +1,29 @@
+<h1>Salary Calculator</h1>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  var date = new Date();
+  $('#simpliest-usage').multiDatesPicker({
+    addDates: [<%=@src%>]
+  });
+});
+
+function yyy() {
+  var dates = $('#simpliest-usage').multiDatesPicker('getDates');
+  $('#selected_dates').attr('value', JSON.stringify(dates));
+}
+  
+</script>
+
+<%=form_tag salary_calc_path, remote: true, onsubmit: 'yyy()' do %>
+
+<%= label_tag :work_schedule_definition %>
+<%= collection_select(:work_schedule, :definition, StaticData::WORK_SCHEDULE_DEFINITIONS, :first, :last) %>
+<%= hidden_field_tag :selected_dates %>
+<div class="demo">
+<div id="simpliest-usage"></div>
+</div>
+
+
+<%= submit_tag 'Submit', id: 'submit_button'%>
+<% end %>

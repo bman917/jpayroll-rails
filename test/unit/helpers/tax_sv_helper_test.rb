@@ -1,5 +1,4 @@
 require 'test_helper'
-include TaxSvHelper
 
 class TaxSvHelperTest < ActionView::TestCase
 

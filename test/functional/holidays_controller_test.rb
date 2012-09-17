@@ -2,7 +2,7 @@ require 'test_helper'
 
 class HolidaysControllerTest < ActionController::TestCase
   setup do
-    @holiday = holidays(:one)
+    @holiday = holidays(:holy_sunday)
   end
 
   test "should get index" do

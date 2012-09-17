@@ -1,4 +1,8 @@
 RailsApp::Application.routes.draw do
+  post "salary/calc"
+  match "salary" => "salary#index"
+  get "salary/select"
+
   resources :holidays
   
   match  "holidays/month/:month" => "holidays#month"
