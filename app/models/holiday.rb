@@ -7,7 +7,7 @@ class Holiday < ActiveRecord::Base
     Holiday.where(date: (Date.new(year, month, 01)..(Date.new(year, (month), max))))
   end
 
-  def self.find_by_dates (date_array)
+  def self.find_holiday_by_dates (date_array)
     Holiday.where("date in (?)", date_array)
   end
 

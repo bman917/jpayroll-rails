@@ -10,7 +10,7 @@ class HolidayTest < ActiveSupport::TestCase
     year = 2012
     working_days = get_working_days(month,year)
     
-    matched_holidays = Holiday.find_by_dates(working_days)
+    matched_holidays = Holiday.find_holiday_by_dates(working_days)
 
     validate = lambda do | holiday_key |
       match = nil

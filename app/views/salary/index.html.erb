@@ -4,7 +4,7 @@
 $(document).ready(function() {
   var date = new Date();
   $('#simpliest-usage').multiDatesPicker({
-    addDates: [<%=@src%>]
+    addDates: [<%=@default_working_days%>]
   });
 });
 
@@ -19,6 +19,11 @@ function yyy() {
 
 <%= label_tag :work_schedule_definition %>
 <%= collection_select(:work_schedule, :definition, StaticData::WORK_SCHEDULE_DEFINITIONS, :first, :last) %>
+
+<%= label_tag :salary %>
+<%= text_field_tag :salary, {}, value: 30000.00 %>
+
+
 <%= hidden_field_tag :selected_dates %>
 <div class="demo">
 <div id="simpliest-usage"></div>
@@ -27,3 +32,33 @@ function yyy() {
 
 <%= submit_tag 'Submit', id: 'submit_button'%>
 <% end %>
+
+<div id="calc-result" style="display: none">
+  <table>
+    <tr>
+      <th>Regular Salary</th>
+      <td id="calc-result-regular-salary"></td>
+    </tr>
+    <tr>
+      <th>Daily Rate</th>
+      <td id="calc-result-daily-rate"></td>
+    </tr>
+    <tr>
+      <th>Number of Day's Worked</th>
+      <td id="calc-result-days-worked"></td>
+    </tr>
+    <tr>
+      <th>This Month's Salary</th>
+      <td id="calc-result-salary"></td>
+    </tr>
+    <tr>
+      <th>Working Holiday's</th>
+      <td><ul id="calc-result-holidays-worked"></ul></td>
+    </tr>
+    <tr>
+      <th>Holiday Pay</th>
+      <td id="calc-result-holiday-pay"></td>
+    </tr>
+  </table>
+
+</div>

@@ -45,8 +45,8 @@ table.ui-datepicker-calendar {border-collapse: separate;}
 
 /* begin: jQuery UI Datepicker emphasis on selected dates */
 .ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
-	background: #743620 none;
-	color: white;
+    background: #743620 none;
+    color: white;
 }
 /* end: jQuery UI Datepicker emphasis on selected dates */
 
@@ -56,5 +56,55 @@ table.ui-datepicker-calendar {border-collapse: separate;}
 /* end: jQuery UI Datepicker hide datepicker helper */
 
 .ui-datepicker-prev, .ui-datepicker-next {
+
+}
+
+div#calc-result {
+
+    margin-top: 1em;
+    padding: 1em;
+    list-style-position: inside;
+
+    ul {
+        list-style: none;
+        margin-left: 0;
+        padding-left: 1em;
+        text-indent: -1em;
+    }
     
+
+    table {
+        border-collapse: collapse;
+        width: auto;
+        margin: 3px;
+        font-size: .75em;
+        border: .25em solid #95bce2;
+        border-radius: 10px;
+
+    }
+
+    th {
+        background: #3e83c9;
+        color: #fff;
+        font-weight: bold;
+        padding: 1em;
+        text-align: left;
+        border-right: 1px solid #fff;
+        line-height: 1.2;
+
+    }
+
+    td {
+        padding: 3px 3px;
+        border-bottom: 1px solid #95bce2;
+        vertical-align: top;
+        font-size: 1em;
+        text-align: center;
+    }
+
+
+
+    h2 {
+        font-weight: bold;
+    }
 }
