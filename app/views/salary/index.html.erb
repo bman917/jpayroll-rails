@@ -8,7 +8,7 @@ $(document).ready(function() {
   });
 });
 
-function yyy() {
+function getSelected() {
   var dates = $('#simpliest-usage').multiDatesPicker('getDates');
   $('#selected_dates').attr('value', JSON.stringify(dates));
 }
@@ -40,10 +40,11 @@ function selectAll() {
 
 </script>
 
-<%=form_tag salary_calc_path, remote: true, onsubmit: 'yyy()' do %>
-
+<%=form_tag salary_calc_path, remote: true, onsubmit: 'getSelected()' do %>
+<!--
 <%= label_tag :work_schedule_definition %>
 <%= collection_select(:work_schedule, :definition, StaticData::WORK_SCHEDULE_DEFINITIONS, :first, :last) %>
+-->
 
 <%= label_tag :salary %>
 <%= text_field_tag :salary, {}, value: 30000.00 %>

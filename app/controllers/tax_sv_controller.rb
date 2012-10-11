@@ -22,21 +22,13 @@ class TaxSvController < ApplicationController
     ytd_tax = params[:ytd_tax].to_f
     schedule = params[:schedule]
 
-    puts "Month #{month}"
-    puts "ytd_inc #{ytd_inc}"
-    puts "Schedule: #{schedule}"
-
     @holidays = Holiday.find_by_month(month)
-    @holidays.each do |h|
-      puts h.description
-    end
-
 
     inc *= 2 if schedule == 'Semi-Monthly'
     inc *= 4 if schedule == 'Weekly'
     
     @tax = calculate_tax(:single,dependents , inc, extra_income, deductions,month,ytd_tax,ytd_inc)
-    
+
     puts(@tax)
 
     respond_to do |format|
