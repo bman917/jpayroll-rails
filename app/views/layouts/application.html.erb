@@ -8,7 +8,15 @@
   <title>JPayroll (beta)</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "/javascripts/date" %>
   <%= csrf_meta_tags %>
+
+  <%
+    @mdp = "/MultiDatePickerv1.6.1"
+    @mdp_css = @mdp + "/css"
+  %>
+  <%= javascript_include_tag "#{@mdp}/jquery-ui.multidatespicker.js" %>
+  <%= stylesheet_link_tag "#{@mdp_css}/mdp.css", "#{@mdp_css}/pepper-ginder-custom.css"%>
 </head>
 <body id="main">
   <div id="nav">

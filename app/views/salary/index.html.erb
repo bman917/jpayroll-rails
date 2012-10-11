@@ -12,7 +12,32 @@ function yyy() {
   var dates = $('#simpliest-usage').multiDatesPicker('getDates');
   $('#selected_dates').attr('value', JSON.stringify(dates));
 }
+
+function clearAll() {
+  $('#simpliest-usage').multiDatesPicker('resetDates', 'picked');
+
+}
+
+function selectAll() {
+
+  clearAll();
   
+  var month = $('.ui-datepicker-month').text();
+  var year = $('.ui-datepicker-year').text();
+  var imonth = Date.parse(month).getMonth();
+  var days = Date.getDaysInMonth(year,imonth);
+  
+  var workingDays = [];
+  for(var i=1; i< days+1; i++) {
+    var d = new Date(year,imonth,i);
+    if (d.isWeekday()) {
+      workingDays.push(d);
+    }
+  }
+
+  $('#simpliest-usage').multiDatesPicker('addDates', workingDays);
+}
+
 </script>
 
 <%=form_tag salary_calc_path, remote: true, onsubmit: 'yyy()' do %>
@@ -25,9 +50,13 @@ function yyy() {
 
 
 <%= hidden_field_tag :selected_dates %>
+<%= hidden_field_tag :selected_year %>
+<%= hidden_field_tag :selected_month %>
 <div class="demo">
 <div id="simpliest-usage"></div>
 </div>
+<a href="#" onclick="selectAll()">All Working Days</a>
+<a href="#" onclick="clearAll()">Clear</a>
 
 
 <%= submit_tag 'Submit', id: 'submit_button'%>
@@ -50,6 +79,10 @@ function yyy() {
     <tr>
       <th>This Month's Salary</th>
       <td id="calc-result-salary"></td>
+    </tr>
+    <tr>
+      <th>Income Tax</th>
+      <td id="calc-result-monthly-tax"></td>
     </tr>
     <tr>
       <th>Working Holiday's</th>

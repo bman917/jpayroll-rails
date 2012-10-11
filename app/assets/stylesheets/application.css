@@ -105,3 +105,12 @@ tr.alt td {
 tr.over td, tr:hover td {
     background: #bcd4ec;
 }
+
+
+/* ==== Styling for Multi Date Picker - START ===== */
+div.demo {
+    width: 17em;
+    display: block;
+    padding: 0 0;
+}
+/* ==== Styling for Multi Date Picker - END   ===== */

@@ -22,9 +22,9 @@ ActiveRecord::Schema.define(:version => 20120912164346) do
     t.date     "date"
     t.string   "description"
     t.string   "holiday_type"
-    t.decimal  "rate"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.decimal  "rate",         :precision => 10, :scale => 0
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
   end
 
 end

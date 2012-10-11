@@ -18,4 +18,4 @@ production:
   database: <%=ENV['OPENSHIFT_APP_NAME']%>
   username: <%=ENV['OPENSHIFT_DB_USERNAME']%>
   password: <%=ENV['OPENSHIFT_DB_PASSWORD']%>
-  socket:   <%=ENV['OPENSHIFT_DB_SOCKET']%>
+  host: localhost

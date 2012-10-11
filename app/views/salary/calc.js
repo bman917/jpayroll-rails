@@ -6,7 +6,7 @@ $('#calc-result-salary').text('<%=@this_months_salary%>');
 $('#calc-result-holiday-pay').text('<%=@holiday_pay%>');
 $('#calc-result').show();
 var holidays_worked = "";
-//<% @result[:holidays_worked].each do |h| %>
+//<% @matched_holiday.each do |h| %>
 holidays_worked += "<li><%=h.description%></li>";
 //<% end %>
 $('#calc-result-holidays-worked').html(holidays_worked);

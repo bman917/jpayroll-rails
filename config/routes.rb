@@ -1,4 +1,9 @@
 RailsApp::Application.routes.draw do
+  get "multi_date_picker/all"
+  get "multi_date_picker/fist_half"
+  get "multi_date_picker/seconf_half"
+  get "multi_date_picker/clear_all"
+
   post "salary/calc"
   match "salary" => "salary#index"
 

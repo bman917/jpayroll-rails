@@ -1,4 +1,3 @@
-include HolidaysHelper
 include SalaryHelper
 
 class SalaryController < ApplicationController
@@ -14,27 +13,28 @@ class SalaryController < ApplicationController
       Date.strptime(o, '%m/%d/%Y')
     end
 
+    month = selected_dates.first.month
+    year = selected_dates.first.year
+
     @salary = params[:salary].to_f
-    @daily_rate = @salary / 20
+    @daily_rate = @salary / get_working_days(month,year).length
 
     @matched_holiday = Holiday.find_holiday_by_dates(selected_dates)
     @days_worked = selected_dates.length
 
     @holiday_pay = 0
-    @matched_holiday.each { |h| @holiday_pay += @daily_rate * h.rate}
+    @matched_holiday.each { |h| @holiday_pay += @daily_rate * (h.rate/100) }
+
+    puts "Daily Rate: #{@daily_rate}"
+    puts "Matched Holiday #{@matched_holiday.length}, Holiday Pay: #{@holiday_pay}"
 
     @this_months_salary = @daily_rate * @days_worked
     @this_months_salary_w_holiday_pay = @this_months_salary + @holiday_pay
 
-    @result = {
-      days_worked: @days_worked,
-      holidays_worked: @matched_holiday
-    }
-
-    puts "Daily Rate: #{@daily_rate}"
-    @result[:holidays_worked].each { |h| @desc = h.description }
-    puts @desc
-    #render :action => "index"
+    @matched_holiday.each do |h|
+      @desc = h.description
+      puts "Desc: #{@desc}"
+    end
     
   end
   
