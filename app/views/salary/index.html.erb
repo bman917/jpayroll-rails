@@ -48,8 +48,10 @@ function selectAll() {
 
 <%= label_tag :salary %>
 <%= text_field_tag :salary, {}, value: 30000.00 %>
+<%= render '/tax_sv/dependents' %>
 
 
+<%= label_tag 'Days Worked' %>
 <%= hidden_field_tag :selected_dates %>
 <%= hidden_field_tag :selected_year %>
 <%= hidden_field_tag :selected_month %>

@@ -10,3 +10,4 @@ var holidays_worked = "";
 holidays_worked += "<li><%=h.description%></li>";
 //<% end %>
 $('#calc-result-holidays-worked').html(holidays_worked);
+$('#calc-result-monthly-tax').text('<%=number_to_currency(@tax[:monthly_income_tax])%>');

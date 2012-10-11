@@ -1,4 +1,5 @@
 include SalaryHelper
+include TaxSvHelper
 
 class SalaryController < ApplicationController
 
@@ -15,6 +16,7 @@ class SalaryController < ApplicationController
 
     month = selected_dates.first.month
     year = selected_dates.first.year
+
 
     @salary = params[:salary].to_f
     @daily_rate = @salary / get_working_days(month,year).length
@@ -35,6 +37,8 @@ class SalaryController < ApplicationController
       @desc = h.description
       puts "Desc: #{@desc}"
     end
+
+    @tax = calculate_tax(:single,params[:dependents].to_i, @this_months_salary, 0, 0,month ,0, 0);
     
   end
   
