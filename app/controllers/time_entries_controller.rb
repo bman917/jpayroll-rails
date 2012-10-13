@@ -1,12 +1,31 @@
 class TimeEntriesController < ApplicationController
+
+  def table
+    
+  end
   # GET /time_entries
   # GET /time_entries.json
   def index
     @time_entries = TimeEntry.all
 
+    metadata = [
+      {name: "date", label: "Date", datatype: "date", editable: true},
+      {name: "time_in", label: "Time In", datatype: "string", editable: true},
+      {name: "time_out", label: "Time Out", datatype: "string", editable: true}
+    ]
+
+    data = []
+    
+    @time_entries.each do |t|
+      x = { id: t.id, values: {date: t.time_in.strftime('%d %b %Y'), time_in: "#{t.time_in.hour}:#{t.time_in.min}", time_out: "#{t.time_out.hour}:#{t.time_out.min}"}}
+      data << x
+    end
+    ed = EditableGrid.new(metadata, data)
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @time_entries }
+      format.json { render json: ed }
+      format.xml { render xml: @time_entries}
     end
   end
 

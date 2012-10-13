@@ -3,6 +3,8 @@ RailsApp::Application.routes.draw do
 
   resources :time_entries
 
+  match "time_table" => "time_entries#table"
+
   get "multi_date_picker/all"
   get "multi_date_picker/fist_half"
   get "multi_date_picker/seconf_half"
