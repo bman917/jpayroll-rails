@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  employee_id: 1
+  time_in: 2012-10-13 17:09:45
+  time_out: 2012-10-13 17:09:45
+  hours: 1.5
+
+two:
+  employee_id: 1
+  time_in: 2012-10-13 17:09:45
+  time_out: 2012-10-13 17:09:45
+  hours: 1.5

@@ -1,4 +1,8 @@
 RailsApp::Application.routes.draw do
+  resources :employees
+
+  resources :time_entries
+
   get "multi_date_picker/all"
   get "multi_date_picker/fist_half"
   get "multi_date_picker/seconf_half"

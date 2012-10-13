@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120912164346) do
+ActiveRecord::Schema.define(:version => 20121013090945) do
+
+  create_table "employees", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "middle_name"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "holiday_types", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -22,9 +30,18 @@ ActiveRecord::Schema.define(:version => 20120912164346) do
     t.date     "date"
     t.string   "description"
     t.string   "holiday_type"
-    t.decimal  "rate",         :precision => 10, :scale => 0
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.decimal  "rate"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "time_entries", :force => true do |t|
+    t.integer  "employee_id"
+    t.datetime "time_in"
+    t.datetime "time_out"
+    t.float    "hours"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end

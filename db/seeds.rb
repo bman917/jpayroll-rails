@@ -97,3 +97,32 @@ Holiday.create(
    holiday_type: HolidayType::NAMES_MAP[:special],
    rate: 30
 )
+
+Employee.delete_all
+TimeEntry.delete_all
+
+Employee.create(
+   first_name: "Juan",
+   middle_name: "Ponce",
+   last_name: "Dela Cruz"
+)
+
+TimeEntry.create(
+  time_in: Time.now.advance(days: 1),
+  time_out: Time.now.advance(days: 1, hours: 8)
+  )
+
+TimeEntry.create(
+  time_in: Time.now.advance(days: 2),
+  time_out: Time.now.advance(days: 2, hours: 8)
+  )
+
+TimeEntry.create(
+  time_in: Time.now.advance(days: 3),
+  time_out: Time.now.advance(days: 3, hours: 8)
+  )
+
+TimeEntry.create(
+  time_in: Time.now.advance(days: 4),
+  time_out: Time.now.advance(days: 4, hours: 8)
+  )
