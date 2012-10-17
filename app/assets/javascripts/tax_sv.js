@@ -101,11 +101,13 @@ function selectAll() {
   */
 function updateDatePickerMonth() {
     var monthNo = getSelectedMonthElement().attr('value');
-    var year = $('.ui-datepicker-year').text();
     clearAll();
-    $(datePickerID).datepicker('setDate', monthNo+'/1/'+year);
-    
+    $(datePickerID).datepicker('setDate', monthNo+'/1/'+currentYear);
     selectAll();
+}
+function updateMonth(month) {
+   $('#month_no').val(month);
+   $(datePickerID).datepicker('setDate', month+'/1/'+currentYear);
 }
 
 
@@ -144,8 +146,8 @@ $(document).ready(function() {
      * list of holidays
      */
     $('#month_no').change(displayHolidays);
-    $('#month_no').change(updateDatePickerMonth);
-
+    //TODO: Solve performance problem before enablining this
+    //$('#month_no').change(updateDatePickerMonth);
 });
  
 

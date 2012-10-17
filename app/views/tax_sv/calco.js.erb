@@ -18,9 +18,8 @@ s += "</tr>";
 $('div.result tr:last').after(s);
 $('#ytd_inc').attr('value', '<%=@tax[:new_ytd_inc]%>');
 $('#ytd_tax').attr('value', '<%=@tax[:new_ytd_tax]%>');
-$('#month_no').val(month+1);
-
 finished_loading();
+updateMonth(month+1);
 
 // If you reach December, do not enable the submit button
 <% if params[:month_no].to_i == 12  %>
