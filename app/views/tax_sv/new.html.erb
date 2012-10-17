@@ -1,86 +1,90 @@
 <h1>Philippine Income Tax Calculator</h1>
 
-<div class="holidays_box">
-  <p>Holidays&nbsp;<span>(<%=Time.now.year%>)</span></p>
-  <table id="monthly_holidays_table">
-    <thead>
-      <tr>
-        <th>Description</th>
-        <th class="month">Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>None</td>
-      </tr>
 
-    </tbody>
-  </table>
+<div class="right_nav">
+  <div class="holidays_box">
+    <p>Holidays</p>
+    <table id="monthly_holidays_table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th class="month">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>None</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
 
 <div class="tax_calc_form">
   <%=form_tag tax_sv_calco_path, remote: true, onsubmit: 'loading()' do %>
 
-<fieldset>
+    <fieldset>
 
-<%= label_tag 'schedule', 'Pay Schedule'%>
-<%= select_tag :schedule, "<option>Monthly</option><option>Semi-Monthly</option><option>Weekly</option>".html_safe %>
-
-  
-<%= label_tag 'income', 'Monthly Income', id: 'income_label'%>
-<%= text_field_tag :income, {}, value: 30000.00 %>
-
-<%= label_tag 'extra_income', 'OT/Holiday/Night Diff'%>
-<%= text_field_tag :extra_income, {}, value: 0%>
-
-<%= label_tag 'deductions', 'Deductions'%>
-<%= text_field_tag :deductions, {}, value: 0 %>
-    
-    <%= label_tag 'dependents', 'Dependents' %>
-    <%= select_tag :dependents, "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %>
+      <%= label_tag 'schedule', 'Pay Schedule'%>
+      <%= select_tag :schedule, "<option>Monthly</option><option>Semi-Monthly</option><option>Weekly</option>".html_safe %>
 
 
-    <%= label_tag 'month_no', 'Month Number' %>
-    <%= select_month(1, {}, {id: 'month_no', name: 'month_no'}) %>
+      <%= label_tag 'income', 'Monthly Income', id: 'income_label'%>
+      <%= text_field_tag :income, {}, value: 30000.00 %>
 
-    <%= label_tag 'ytd_inc', 'Year-to-date Income' %>
-    <%= text_field_tag :ytd_inc, {}, value: 0  %>
+      <%= label_tag 'extra_income', 'OT/Holiday/Night Diff'%>
+      <%= text_field_tag :extra_income, {}, value: 0%>
 
-    <%= label_tag 'ytd_tax', 'Year-to-date Tax' %>
-    <%= text_field_tag :ytd_tax, {}, value: 0 %>
-  
-    
+      <%= label_tag 'deductions', 'Deductions'%>
+      <%= text_field_tag :deductions, {}, value: 0 %>
 
-   </fieldset>
+      <%= label_tag 'dependents', 'Dependents' %>
+      <%= select_tag :dependents, "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %>
 
-<div class="buttons">
-<%= submit_tag 'Submit', id: 'submit_button' %>
-<%= button_tag 'Clear', class: 'clear_button', onClick: 'window.location.reload()' %>
-</div>
-   
-  <% end %>
-</div>
+
+      <%= label_tag 'month_no', 'Month Number' %>
+      <%= select_month(1, {}, {id: 'month_no', name: 'month_no'}) %>
+      <%= hidden_field_tag :days_worked %>
+      <%= hidden_field_tag :selected_dates %>
+      <%= hidden_field_tag :selected_year %>
+      <%= hidden_field_tag :selected_month %>
+
+      <%= label_tag 'ytd_inc', 'Year-to-date Income' %>
+      <%= text_field_tag :ytd_inc, {}, value: 0  %>
+
+      <%= label_tag 'ytd_tax', 'Year-to-date Tax' %>
+      <%= text_field_tag :ytd_tax, {}, value: 0 %>
 
 
 
-<div class="result">
+    </fieldset>
 
-  <table id="tax_table_01">
-    <tr>
-      <th class="month">Month</th>
-      <th>Annual Income</th>
-      <th class="pe">Personal Exemptions</th>
-      <th class="sss">SSS</th>
-      <th>Phil-Health</th>
-      <th>Taxable Income</th>
-      <th class="tax_bracket">Tax Bracket</th>
-      <th>Monthly Tax</th>
-      <th>Net Monthly Pay</th>
-    </tr>
-
-  </table>
-  <div id="loading" hidden="true">
-    Calculating Tax. Please wait...
+    <div class="buttons">
+      <%= submit_tag 'Submit', id: 'submit_button' %>
+      <%= button_tag 'Clear', class: 'clear_button', onClick: 'window.location.reload()' %>
+      </div>
+    <% end %>
   </div>
 
-</div>
+  <div class="result">
+
+    <table id="tax_table_01">
+      <tr>
+        <th class="month">Month</th>
+        <th>Annual Income</th>
+        <th class="pe">Personal Exemptions</th>
+        <th class="sss">SSS</th>
+        <th>Phil-Health</th>
+        <th>Taxable Income</th>
+        <th class="tax_bracket">Tax Bracket</th>
+        <th>Monthly Tax</th>
+        <th>Net Monthly Pay</th>
+      </tr>
+
+    </table>
+    <div id="loading" hidden="true">
+      Calculating Tax. Please wait...
+    </div>
+
+  </div>

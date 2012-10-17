@@ -2,6 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
+var today = new Date();
+var currentYear = today.getFullYear();
+var datePickerID = '#days_worked';
+
+
 function loading() {
     $("#loading").show();
     $("#submit_button").attr('disabled', true);
@@ -17,51 +23,129 @@ function finished_loading() {
     displayHolidays();
 }
 
- function displayHolidays() {
-   var monthSelect = $('#month_no option:selected');
-   var monthNo = monthSelect.attr('value');
-   var result = $.ajax({
-     type: "GET",
-     cache: false,
-     url: "holidays/month/" + monthNo,
-     dataType: 'json',
-     beforeSend: function() {$('div.holidays_box').spin()},
-     complete: function(){$('div.holidays_box').spin(false)},
-     success: function (holidays) {
+function getSelectedMonthElement() {
+    return $('#month_no option:selected');
+}
 
-         $('div.holidays_box .month').text(monthSelect.text());
-         $('#monthly_holidays_table tbody td').remove();
+function displayHolidays() {
+    var monthSelect = getSelectedMonthElement();
+    var monthNo = monthSelect.attr('value');
+    var result = $.ajax({
+        type: "GET",
+        cache: false,
+        url: "holidays/month/" + monthNo,
+        dataType: 'json',
+        beforeSend: function() {
+            $('div.holidays_box').spin()
+        },
+        complete: function(){
+            $('div.holidays_box').spin(false)
+        },
+        success: function (holidays) {
 
-         var rows = "";
-         $.each(holidays, function(index, holiday) {
-             var d = new Date(holiday.date);
-             rows += "<tr>"+"<td>"+holiday.description+"</td>"+
-                            "<td>"+d.getDate()+"</td></tr>";
-         });
+            $('div.holidays_box .month').text(monthSelect.text());
+            $('#monthly_holidays_table tbody td').remove();
 
-         if (rows.length == 0) {
-             rows += "<tr>"+"<td>None</td><td></td></tr>";
-         }
+            var rows = "";
+            $.each(holidays, function(index, holiday) {
+                var d = new Date(holiday.date);
+                rows += "<tr>"+"<td>"+holiday.description+"</td>"+
+                "<td>"+d.getDate()+"</td></tr>";
+            });
 
-         $('#monthly_holidays_table tbody').html(rows);
+            if (rows.length == 0) {
+                rows += "<tr>"+"<td>None</td><td></td></tr>";
+            }
 
-     }
-   });
-  }
+            $('#monthly_holidays_table tbody').html(rows);
+
+        }
+    });
+}
 
 /*
- * Bind change event so that selecting a payment schedule will
- * also change the Income label.
+ * =================================================
+ * Start Date Picker Methods
+ * =================================================
  */
- $(document).ready(function() {
-     
-      $('#schedule').change(function() {
+function getSelected() {
+    var dates = $('#simpliest-usage').multiDatesPicker('getDates');
+    $('#selected_dates').attr('value', JSON.stringify(dates));
+}
+
+function clearAll() {
+    $('#simpliest-usage').multiDatesPicker('resetDates', 'picked');
+
+}
+
+function selectAll() {
+
+    clearAll();
+
+    var month = getSelectedMonthElement().text();
+
+    var imonth = Date.parse(month).getMonth();
+    var days = Date.getDaysInMonth(currentYear,imonth);
+
+    var workingDays = [];
+    for(var i=1; i< days+1; i++) {
+        var d = new Date(currentYear,imonth,i);
+        if (d.isWeekday()) {
+            workingDays.push(d);
+        }
+    }
+    $(datePickerID).multiDatesPicker('addDates', workingDays);
+}
+/*
+  * Update the date picker to the selected month from the form
+  */
+function updateDatePickerMonth() {
+    var monthNo = getSelectedMonthElement().attr('value');
+    var year = $('.ui-datepicker-year').text();
+    clearAll();
+    $(datePickerID).datepicker('setDate', monthNo+'/1/'+year);
+    
+    selectAll();
+}
+
+
+/*
+ * =================================================
+ * Start Document Ready
+ * =================================================
+ */
+$(document).ready(function() {
+
+    /*
+     *Initialize the multi-date picker
+     */
+    $(datePickerID).multiDatesPicker({
+        defaultDate: '1/1/' + currentYear,
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        showOn: "button",
+        buttonImage: "/images/calendar.gif",
+        buttomImageOnly: true,
+        showButtonPanel: true        
+    });
+    selectAll();
+    
+
+    /*
+     * Bind change event so that selecting a payment schedule will
+     * also change the Income label.
+     */
+    $('#schedule').change(function() {
         $('#income_label').text($('#schedule option:selected').text() + " Income");
-      });
+    });
 
-     $('#month_no').change(displayHolidays);
-     //displayHolidays();
+    /*
+     * Bing change event so that selecting a mont will also update the
+     * list of holidays
+     */
+    $('#month_no').change(displayHolidays);
+    $('#month_no').change(updateDatePickerMonth);
 
- });
+});
  
 

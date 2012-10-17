@@ -28,13 +28,10 @@ div.result {
         margin-right: 1em;
     }
 
-    input {
+    input, #dependents {
         display: block;
     }
 
-    select {
-        display: block;
-    }
 
     .submit { float: left }
 }
@@ -43,8 +40,15 @@ div.result {
 .sss { width: 50px }
 .pe { width: 70px }
 
-div.holidays_box {
-    width: 200px;
+div.right_nav {
     float: right;
-
 }
+div.holidays_box {
+    float: right;
+    margin: 1em;
+}
+
+/* begin: jQuery UI Datepicker moving pixels fix */
+table.ui-datepicker-calendar {border-collapse: separate;}
+.ui-datepicker-calendar td {border: 1px solid transparent;}
+/* end: jQuery UI Datepicker moving pixels fix */

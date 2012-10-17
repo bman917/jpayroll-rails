@@ -49,6 +49,10 @@ function selectAll() {
 <%= label_tag :salary %>
 <%= text_field_tag :salary, {}, value: 30000.00 %>
 <%= render '/tax_sv/dependents' %>
+<%= label_tag :ytd_income %>
+<%= text_field_tag :ytd_income %>
+<%= label_tag :ytd_tax %>
+<%= text_field_tag :ytd_tax %>
 
 
 <%= label_tag 'Days Worked' %>
@@ -60,7 +64,6 @@ function selectAll() {
 </div>
 <a href="#" onclick="selectAll()">All Working Days</a>
 <a href="#" onclick="clearAll()">Clear</a>
-
 
 <%= submit_tag 'Submit', id: 'submit_button'%>
 <% end %>
