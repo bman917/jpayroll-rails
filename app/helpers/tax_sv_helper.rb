@@ -48,7 +48,7 @@ module TaxSvHelper
       remaining_tax_to_pay: tax_to_pay.round(4),
       monthly_income_tax: monthly_tax,
       net_monthly_pay: net_monthly_pay,
-      new_ytd_inc: (ytd_inc + this_months_inc),
+      new_ytd_inc: (ytd_inc + this_months_inc).round(4),
       new_ytd_tax: ytd_tax
     }
 

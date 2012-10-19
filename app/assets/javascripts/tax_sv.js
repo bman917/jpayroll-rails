@@ -69,7 +69,7 @@ function displayHolidays() {
  * =================================================
  */
 function getSelected() {
-    var dates = $('#simpliest-usage').multiDatesPicker('getDates');
+    var dates = $(datePickerID).multiDatesPicker('getDates');
     $('#selected_dates').attr('value', JSON.stringify(dates));
 }
 
@@ -123,8 +123,6 @@ $(document).ready(function() {
      */
     $(datePickerID).multiDatesPicker({
         defaultDate: '1/1/' + currentYear,
-        showOtherMonths: true,
-        selectOtherMonths: true,
         showOn: "button",
         buttonImage: "/images/calendar.gif",
         buttomImageOnly: true,
@@ -147,7 +145,9 @@ $(document).ready(function() {
      */
     $('#month_no').change(displayHolidays);
     //TODO: Solve performance problem before enablining this
-    //$('#month_no').change(updateDatePickerMonth);
+    $('#month_no').change(updateDatePickerMonth);
+
+    $('#submit_button').click(getSelected);
 });
  
 

@@ -1,4 +1,5 @@
 include TaxSvHelper
+include DateLibrary
 
 class TaxSvController < ApplicationController
   def test
@@ -24,10 +25,24 @@ class TaxSvController < ApplicationController
 
     @holidays = Holiday.find_by_month(month)
 
-    inc *= 2 if schedule == 'Semi-Monthly'
-    inc *= 4 if schedule == 'Weekly'
-    
+    selected_dates = JSON.parse(params[:selected_dates]).map do |o|
+      Date.strptime(o, '%m/%d/%Y')
+    end
+
+    @daily_rate = inc / DateLibrary.get_working_days(month).length
+    @days_worked = selected_dates.length
+
+    @holiday_pay = 0
+    @holidays.each { |h| @holiday_pay += @daily_rate * (h.rate/100) }
+
+    puts "Daily Rate: #{@daily_rate}"
+    puts "Matched Holiday #{@holidays.length}, Holiday Pay: #{@holiday_pay}"
+
+    @this_months_salary = (@daily_rate * @days_worked) + extra_income - deductions
+
     @tax = calculate_tax(:single,dependents , inc, extra_income, deductions,month,ytd_tax,ytd_inc)
+    #@tax = calc_tax(:single, dependents, inc, @this_months_salary, month, ytd_tax, ytd_inc)
+
 
     puts(@tax)
 
