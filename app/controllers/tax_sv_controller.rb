@@ -17,10 +17,7 @@ class TaxSvController < ApplicationController
     inc = params[:income].to_f
     extra_income = params[:extra_income].to_f
     deductions = params[:deductions].to_f
-    month = params[:month_no].to_i
-    dependents = params[:dependents].to_i
-    ytd_inc = params[:ytd_inc].to_f
-    ytd_tax = params[:ytd_tax].to_f
+    month = params[:month_number].to_i
     schedule = params[:schedule]
 
     @holidays = Holiday.find_by_month(month)
@@ -40,10 +37,8 @@ class TaxSvController < ApplicationController
 
     @this_months_salary = (@daily_rate * @days_worked) + extra_income - deductions
 
-    @tax = calculate_tax(:single,dependents , inc, extra_income, deductions,month,ytd_tax,ytd_inc)
-    #@tax = calc_tax(:single, dependents, inc, @this_months_salary, month, ytd_tax, ytd_inc)
-
-
+    @tax = PhTax::Util.calc_tax(inc,params)
+    
     puts(@tax)
 
     respond_to do |format|

@@ -20,16 +20,15 @@ function finished_loading() {
     $('div.result').spin(false);
     $('#extra_income').attr('value', '0');
     $('#deductions').attr('value', '0');
-    displayHolidays();
 }
 
 function getSelectedMonthElement() {
-    return $('#month_no option:selected');
+    return $('#month_number option:selected');
 }
 
-function displayHolidays() {
+function displayHolidays(monthNo) {
     var monthSelect = getSelectedMonthElement();
-    var monthNo = monthSelect.attr('value');
+
     var result = $.ajax({
         type: "GET",
         cache: false,
@@ -106,7 +105,7 @@ function updateDatePickerMonth() {
     selectAll();
 }
 function updateMonth(month) {
-   $('#month_no').val(month);
+   $('#month_number').val(month);
    $(datePickerID).datepicker('setDate', month+'/1/'+currentYear);
 }
 
@@ -143,9 +142,9 @@ $(document).ready(function() {
      * Bing change event so that selecting a mont will also update the
      * list of holidays
      */
-    $('#month_no').change(displayHolidays);
+    $('#month_number').change(displayHolidays);
     //TODO: Solve performance problem before enablining this
-    $('#month_no').change(updateDatePickerMonth);
+    //$('#month_number').change(updateDatePickerMonth);
 
     $('#submit_button').click(getSelected);
 });

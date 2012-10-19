@@ -2,13 +2,13 @@ function add(value, css) {
     return "<td>" + value + "</td>";
 }
 
-var month = <%=(params[:month_no].to_i)%>;
+var month = <%=(params[:month_number].to_i)%>;
 var s = "<tr>";
 
-s += add("<%=Date::ABBR_MONTHNAMES[params[:month_no].to_i]%>");
+s += add("<%=Date::ABBR_MONTHNAMES[params[:month_number].to_i]%>");
 s += add("<%=number_to_currency(@tax[:projected_annual_income])%>");
 s += add("<%=number_to_currency(@tax[:personal_exemption])%>");
-s += add("<%=number_to_currency(@tax[:sss_contribution][:ee])%>");
+s += add("<%=number_to_currency(@tax[:sss_contribution])%>");
 s += add("<%=number_to_currency(@tax[:phil_health_contribution])%>");
 s += add("<%=number_to_currency(@tax[:monthly_taxable_income])%>");
 s += add("<%=(@tax[:percentage]*100).to_i%>&#37;");
@@ -20,9 +20,9 @@ $('#ytd_inc').attr('value', '<%=@tax[:new_ytd_inc]%>');
 $('#ytd_tax').attr('value', '<%=@tax[:new_ytd_tax]%>');
 finished_loading();
 updateMonth(month+1);
-
+displayHolidays(month+1);
 // If you reach December, do not enable the submit button
-<% if params[:month_no].to_i == 12  %>
+<% if params[:month_number].to_i == 12  %>
 $("#submit_button").attr('disabled', true);
 $("#submit_button").after("Reached end of tax year. Click on 'clear'");
 <% end %>

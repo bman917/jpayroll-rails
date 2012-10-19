@@ -48,9 +48,9 @@
           <td><%= select_tag :dependents, "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %></td>
         </tr>
         <tr>
-          <td><%= label_tag 'month_no', 'Month Number' %></td>
+          <td><%= label_tag ':month_number', 'Month Number' %></td>
           <td>
-            <%= select_month(1, {}, {id: 'month_no', name: 'month_no'}) %>
+            <%= select_month(1, {}, {id: 'month_number', name: 'month_number'}) %>
           </td>
         </tr>
         <tr>

@@ -7,7 +7,15 @@ class TaxSvHelperTest < ActionView::TestCase
     tax = nil
     
     calc = lambda do |expected, status, dependents, reg_income, month_income, month_num, ytd_tax, ytd_inc|
-      tax = calc_tax(status, dependents, reg_income, month_income, month_num, ytd_tax, ytd_inc)
+      tax = PhTax::Util.calc_tax(month_income, 
+        year: 2012,
+        month_number: month_num,
+        status: status,
+        dependents: dependents,
+        reg_monthly_income: reg_income,
+        ytd_tax: ytd_tax,
+        ytd_inc: ytd_inc)
+      
       msg = "Incorrect Monthly Income Tax Calculation: #{tax}"
       monthly = tax[:monthly_income_tax]
       assert_in_delta expected, monthly, 0.15, msg
@@ -43,34 +51,36 @@ class TaxSvHelperTest < ActionView::TestCase
   end
 
   test 'Test Zero Income Tax 2012' do
-     puts 'Test Zero Income Tax 2012'
+    puts 'Test Zero Income Tax 2012'
       
-     calc = lambda do |status, dependents, month_income|
-        tax = calc_tax(status, dependents, month_income, month_income, 1, 0.00, 0.00)
-        assert_equal 0.00, tax[:monthly_income_tax], "Monthly Income should not be negative: #{tax}"
-        assert_equal 0.00, tax[:taxable_inc], "Taxable Income should not be negative: #{tax}"
-        assert_equal 0.00, tax[:percentage], "Percentage should be zero: #{tax}"
-        assert_equal 0.00, tax[:bracket], "Bracket should be zero: #{tax}"
-     end
+    calc = lambda do |status, dependents, month_income|
+      tax = PhTax::Util.calc_tax(month_income, status: status, dependents: dependents)
+      assert_equal 0.00, tax[:monthly_income_tax], "Monthly Income should not be negative: #{tax}"
+      assert_equal 0.00, tax[:taxable_inc], "Taxable Income should not be negative: #{tax}"
+      assert_equal 0.00, tax[:percentage], "Percentage should be zero: #{tax}"
+      assert_equal 0.00, tax[:bracket], "Bracket should be zero: #{tax}"
+    end
 
-     calc.call(:single, 0, 4250.00)
-     calc.call(:single, 0, 3000.00)
+    calc.call(:single, 0, 4250.00)
+    calc.call(:single, 0, 3000.00)
 
   end
 
-
   test 'Test Annual Tax calculation' do
-    msg = 'Incorrect Annaul Tax calculation'
-    assert_equal    250.00, calc_annual_tax(   5000.00)[:tax], msg
-    assert_equal    500.00, calc_annual_tax(  10000.00)[:tax], msg
-    assert_equal    500.10, calc_annual_tax(  10001.00)[:tax], msg
-    assert_equal   3250.00, calc_annual_tax(  35000.00)[:tax], msg
-    assert_equal  14500.00, calc_annual_tax( 100000.00)[:tax], msg
-    assert_equal  17130.00, calc_annual_tax( 113150.00)[:tax], msg
-    assert_equal  37500.00, calc_annual_tax( 200000.00)[:tax], msg
-    assert_equal  65000.00, calc_annual_tax( 300000.00)[:tax], msg
-    assert_equal 189000.00, calc_annual_tax( 700000.00)[:tax], msg
-    assert_equal 324040.00, calc_annual_tax(1122000.00)[:tax], msg
+    calc = lambda do | expected, annual_income|
+      assert_equal expected, PhTax::IncomeTax.annual(annual_income)[:tax], 'Incorrect Annaul Tax calculation'
+    end
+
+    calc.call    250.00,    5000.00
+    calc.call    500.00,   10000.00
+    calc.call    500.10,   10001.00
+    calc.call   3250.00,   35000.00
+    calc.call  14500.00,  100000.00
+    calc.call  17130.00,  113150.00
+    calc.call  37500.00,  200000.00
+    calc.call  65000.00,  300000.00
+    calc.call 189000.00,  700000.00
+    calc.call 324040.00, 1122000.00
   end
 
   test "Test Personal Exemption calculation" do
@@ -87,7 +97,7 @@ class TaxSvHelperTest < ActionView::TestCase
   
   def personal_exemption_test(status, dependents, expected)
     msg = 'Incorrect personal tax exemption.'
-	assert_equal calc_personal_tax_exemption( status, dependents),  expected    ,msg  
+    assert_equal PhTax::IncomeTax.exemption(status, dependents, 2012),  expected    ,msg
   end
   
   
@@ -103,8 +113,8 @@ class TaxSvHelperTest < ActionView::TestCase
   
   def sss_contriubtion_test(monthlyIncome, er, ee)
     msg = 'Incorrect SSS contribution'
-    expected = { er: er, ee: ee }
-    assert_equal expected, SSS_2012.call(monthlyIncome), msg
+    expected = { employer: er, employee: ee }
+    assert_equal expected, PhTax::Sss.get_sss_formula(2012).call(monthlyIncome), msg
   end
   
   test "Test Phil Health Contribution Claculation 2012" do
@@ -119,12 +129,12 @@ class TaxSvHelperTest < ActionView::TestCase
   
   def philhealth_contribution_test(expected, monthly)
     msg = 'Incorrect Phil Health contribution'
-    assert_equal expected,   PHILHEALTH_2012.call(monthly), msg
+    assert_equal expected,   PhTax::PhilHealth.calc(monthly, 2012), msg
   end
 
   test "Test Pag Ibig Contribution Calculation 2012" do
-    assert_equal 300.00, calc_pagibig(15000.00)
-    assert_equal 220.00, calc_pagibig(11000.00)
+    assert_equal 300.00, PhTax::PagIbig.calc(15000.00)
+    assert_equal 220.00, PhTax::PagIbig.calc(11000.00)
   end
   
 end
