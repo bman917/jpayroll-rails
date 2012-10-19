@@ -58,15 +58,18 @@ table {
 ===================================
 */
 
+h1 {
+    font-weight: bolder;
+    font-size: 2em;
+    margin: .75em;
+
+}
+
 body {
     width: 800px;
 }
 
-fieldset {
-    margin: 1em;
-    padding: 0.5em;
-    border: groove 0.25em;
-}
+
 
 table {
     border-collapse: collapse;

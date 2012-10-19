@@ -26,37 +26,50 @@
 
     <fieldset>
 
-      <%= label_tag 'schedule', 'Pay Schedule'%>
-      <%= select_tag :schedule, "<option>Monthly</option><option>Semi-Monthly</option><option>Weekly</option>".html_safe %>
+      <table>
+        <tr>
+          <td class="l"><%= label_tag 'schedule', 'Pay Schedule'%></td>
+          <td><%= select_tag :schedule, "<option>Monthly</option><option>Semi-Monthly</option><option>Weekly</option>".html_safe %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag 'income', 'Monthly Income', id: 'income_label'%></td>
+          <td><%= text_field_tag :income, {}, value: 30000.00 %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag 'extra_income', 'OT/Holiday/Night Diff'%></td>
+          <td> <%= text_field_tag :extra_income, {}, value: 0%></td>
+        </tr>
+        <tr>
+          <td><%= label_tag 'deductions', 'Deductions'%></td>
+          <td><%= text_field_tag :deductions, {}, value: 0 %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag 'dependents', 'Dependents' %></td>
+          <td><%= select_tag :dependents, "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag 'month_no', 'Month Number' %></td>
+          <td>
+            <%= select_month(1, {}, {id: 'month_no', name: 'month_no'}) %>
+          </td>
+        </tr>
+        <tr>
+          <td><%= label_tag 'days_worked', 'Days Worked' %></td>
+          <td><%= hidden_field_tag :days_worked %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag 'ytd_inc', 'Year-to-date Income' %></td>
+          <td><%= text_field_tag :ytd_inc, {}, value: 0  %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag 'ytd_tax', 'Year-to-date Tax' %></td>
+          <td><%= text_field_tag :ytd_tax, {}, value: 0 %></td>
+        </tr>
+      </table>
 
-
-      <%= label_tag 'income', 'Monthly Income', id: 'income_label'%>
-      <%= text_field_tag :income, {}, value: 30000.00 %>
-
-      <%= label_tag 'extra_income', 'OT/Holiday/Night Diff'%>
-      <%= text_field_tag :extra_income, {}, value: 0%>
-
-      <%= label_tag 'deductions', 'Deductions'%>
-      <%= text_field_tag :deductions, {}, value: 0 %>
-
-      <%= label_tag 'dependents', 'Dependents' %>
-      <%= select_tag :dependents, "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %>
-
-
-      <%= label_tag 'month_no', 'Month Number' %>
-      <%= select_month(1, {}, {id: 'month_no', name: 'month_no'}) %>
-      <%= hidden_field_tag :days_worked %>
       <%= hidden_field_tag :selected_dates %>
       <%= hidden_field_tag :selected_year %>
       <%= hidden_field_tag :selected_month %>
-
-      <%= label_tag 'ytd_inc', 'Year-to-date Income' %>
-      <%= text_field_tag :ytd_inc, {}, value: 0  %>
-
-      <%= label_tag 'ytd_tax', 'Year-to-date Tax' %>
-      <%= text_field_tag :ytd_tax, {}, value: 0 %>
-
-
 
     </fieldset>
 

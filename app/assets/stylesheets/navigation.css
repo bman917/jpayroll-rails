@@ -1,0 +1,20 @@
+/* 
+    Document   : navigation
+    Created on : 10 19, 12, 4:56:56 PM
+    Author     : jchan
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+div#nav {
+    background-color: steelblue;
+}
+
+div#nav a {
+    color: wheat;
+    margin: 2px;
+}
+
+div#nav select {
+}
+

@@ -1,0 +1,59 @@
+/*
+    Document   : tax_form_and_table
+    Created on : 10 19, 12, 5:09:36 PM
+    Author     : jchan
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+div.tax_calc_form {
+    width: 30em;
+    margin: 1em;
+}
+
+.tax_calc_form label {
+    width: 100%;
+}
+
+.tax_calc_form fieldset {
+    border: groove 0.25em;
+}
+
+.tax_calc_form td {
+    padding: 0px 0px;
+    border-bottom: none;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.tax_calc_form input, select {
+    display: block;
+    padding: .10em;
+}
+
+.tax_calc_form div.buttons {
+    margin-bottom: 3em;
+}
+
+.tax_calc_form div.buttons button {
+    display: inline;
+}
+
+.tax_calc_form div.buttons input {
+    float: left;
+}
+
+.tax_calc_form div.buttons button {
+    float: right;
+}
+
+.ui-datepicker-trigger {
+    display: block;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+
+
+

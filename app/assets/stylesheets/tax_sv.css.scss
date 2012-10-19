@@ -3,38 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.tax_calc_form div.buttons input { 
-    display: inline
-}
 
-.clear_button {
-    float: right
-}
 
 div.result {
     margin-top: 25px;
 }
 
-.tax_calc_form {
 
-    width: 425px;
-    display: block;
-
-    label {
-        float: left;
-        width: 160px;
-        text-align: right;
-        clear: left;
-        margin-right: 1em;
-    }
-
-    input, #dependents {
-        display: block;
-    }
-
-
-    .submit { float: left }
-}
 
 .month, .tax_bracket{ width: 20px}
 .sss { width: 50px }
