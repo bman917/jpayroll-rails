@@ -1,0 +1,61 @@
+
+div.tax_calc_simple {
+	
+	margin: 1em;
+
+   	form {
+   		width: 25em;
+   		
+   		border-right: groove 0.25em;
+   		float: left;
+   	}
+
+    table {
+    	font-size: 1em;
+    }
+
+    td {
+	    padding: 0px 0px;
+	    border-bottom: none;
+	    vertical-align: middle;
+	    text-align: right;
+	}
+
+	input, select {
+	    display: block;
+	    padding: .10em;
+	}
+
+	.tax_calc_form_simple_footer {
+    	margin-bottom: 1em;
+    	margin-right: 1em;
+
+    	label {
+			display: block;
+			text-decoration: line-through;
+
+		}
+
+		.buttons {
+	    	float: right;
+	    	margin-right: 1em;
+		}
+
+		#options {
+			margin-left: 6em;
+			font-size: .75em;
+		}
+	}
+
+	.result {
+
+		h1 {
+			display: inline;
+			font-size: 1em;
+		}
+
+		p {
+			display: inline;
+		}
+	}
+}

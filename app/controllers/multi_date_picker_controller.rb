@@ -19,6 +19,10 @@ class MultiDatePickerController < ApplicationController
     src = src[0..-2]
     @default_working_days = src
 
+    respond_to do |format|
+      format.js
+    end
+
   end
 
   def fist_half

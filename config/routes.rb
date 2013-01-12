@@ -21,6 +21,7 @@ RailsApp::Application.routes.draw do
 
   resources :taxes
 
+  get "tax_sv/simple"
   get "tax_sv/test"
   get "tax_sv/new"
   post "tax_sv/calc"

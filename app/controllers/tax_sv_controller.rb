@@ -1,4 +1,3 @@
-include TaxSvHelper
 include DateLibrary
 
 class TaxSvController < ApplicationController
@@ -9,7 +8,11 @@ class TaxSvController < ApplicationController
 
   def calc
     inc = params[:income].to_f
-    @tax = calc_tax(:single, 0, inc, inc,0,0,0)
+    #@tax = calc_tax(:single, 0, inc, inc,0,0,0)
+    @tax = PhTax::Util.calc_tax(inc,params)
+    respond_to do |format|
+      format.js
+    end
 
   end
 

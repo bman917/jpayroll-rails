@@ -1,0 +1,26 @@
+<h1>Philippine Income Tax Calculator <span>(Simple)</span></h1>
+
+<div class="tax_calc_simple">
+
+	<%=form_tag tax_sv_calc_path, remote: true, onsubmit: 'loading()' do %>
+			<table>
+		        <tr>
+		          <td><%= label_tag 'income', 'Monthly Income', id: 'income_label'%></td>
+		          <td><%= text_field_tag :income, {}, value: 30000.00 %></td>
+		        </tr>
+		    </table>
+
+		 <div class="tax_calc_form_simple_footer">
+		 	<div class="buttons">
+	      		<%= submit_tag 'Submit', id: 'submit_button' %>
+	      	</div>
+		 	<div id="options">
+		 		<!--%= label_tag 'more_options', 'More Options:', id: 'more_options' %-->
+		 	</div>
+	      </div>
+    <% end %>
+
+	<div class="result">
+		<h1>Montly Tax:</h1><p>Php xxx.xx</p>
+	</div>
+</div>

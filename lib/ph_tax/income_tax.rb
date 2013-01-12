@@ -40,6 +40,7 @@ module PhTax::IncomeTax
     bracket[2] =  30000.00
     bracket[3] =  70000.00
     bracket[4] = 140000.00
+
     bracket[5] = 250000.00
     bracket[6] = 500000.00
 

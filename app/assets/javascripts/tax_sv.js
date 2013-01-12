@@ -23,16 +23,17 @@ function finished_loading() {
 }
 
 function getSelectedMonthElement() {
-    return $('#month_number option:selected');
+    return $('select#month_number option:selected');
 }
 
 function displayHolidays(monthNo) {
     var monthSelect = getSelectedMonthElement();
+    monthNo = monthSelect.attr('value');
 
     var result = $.ajax({
         type: "GET",
         cache: false,
-        url: "holidays/month/" + monthNo,
+        url: "/holidays/month/" + monthNo,
         dataType: 'json',
         beforeSend: function() {
             $('div.holidays_box').spin()
@@ -147,6 +148,8 @@ $(document).ready(function() {
     //$('#month_number').change(updateDatePickerMonth);
 
     $('#submit_button').click(getSelected);
+
+    displayHolidays(1);
 });
  
 
